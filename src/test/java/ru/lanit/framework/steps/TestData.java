@@ -2,7 +2,13 @@ package ru.lanit.framework.steps;
 
 import org.testng.annotations.DataProvider;
 
+/**
+ * Класс с тестовыми даннными.
+ */
 public class TestData {
+    /**
+     * Данные для позитивного теста testPositiveSum.
+     */
     @DataProvider
     public static Object[][] positiveSumData() {
         return new Object[][] {
@@ -13,6 +19,9 @@ public class TestData {
         };
     }
 
+    /**
+     * Данные для позитивного теста testPositiveSub.
+     */
     @DataProvider
     public static Object[][] positiveSubData() {
         return new Object[][] {
@@ -23,6 +32,9 @@ public class TestData {
         };
     }
 
+    /**
+     * Данные для позитивного теста testPositiveMul.
+     */
     @DataProvider
     public static Object[][] positiveMulData() {
         return new Object[][] {
@@ -32,6 +44,9 @@ public class TestData {
         };
     }
 
+    /**
+     * Данные для позитивного теста testPositiveDiv.
+     */
     @DataProvider
     public static Object[][] positiveDivData() {
         return new Object[][] {
@@ -42,12 +57,15 @@ public class TestData {
         };
     }
 
+    /**
+     * Данные для негативного теста.
+     */
     @DataProvider
     public static  Object[][] negativeData() {
         return new Object[][] {
-                {"string", 2},
-                {null, 2},
-                {null,"string"}
+                {2, 50, 0.555},
+                {7777, 5555, 0},
+                {0.5, -0.8, 5000}
         };
     }
 }
