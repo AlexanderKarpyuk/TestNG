@@ -2,6 +2,7 @@ package ru.lanit.testng;
 
 public class Math {
 
+
     public Object sumTest(Object one, Object two) {
         System.out.println("Складываем " + one + " и " + two);
         return (double)one + (double)two;
