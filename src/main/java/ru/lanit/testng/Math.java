@@ -1,5 +1,8 @@
 package ru.lanit.testng;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ru.lanit.testng.exceptions.IncorrectInputException;
 import ru.lanit.testng.exceptions.OperatorNotFoundException;
 
@@ -14,7 +17,10 @@ import java.text.NumberFormat;
  * На основании которых производит вычисления и выводит результат в консоль.
  */
 public class Math {
+    static final Logger logger = LogManager.getLogger(Math.class);
+
     public static void main(String[] args) {
+        BasicConfigurator.configure();
         Math math = new Math();
         NumberFormat numberFormat = new DecimalFormat("0.#");
 
@@ -30,20 +36,24 @@ public class Math {
 
             String tmp;
 
+            logger.info("Вход в цикл");
             //Бесконечный цикл, поку в консоль не будет введено "exit"
             while(!(tmp = reader.readLine()).equals("exit")) {
+                logger.info("Чтение с консоли");
                 String[] console = tmp.split("\\s");
                 double d1, d2, result;
                 String operator = null;
 
                 //Парсинг значени в дабл, поиск оператора, в случае неудачи выкидывается исключение, цикл повторяется.
                 try {
+                    logger.info("Парсинг строки");
                     if (console.length < 3) {
                         throw new IncorrectInputException();
                     }
                     operator = console[1];
                     d1 = Double.parseDouble(console[0]);
                     d2 = Double.parseDouble(console[2]);
+                    logger.info("Поиск оператора");
                     switch (operator) {
                         case "+" :
                             System.out.println(numberFormat.format(math.sumTest(d1, d2)));
@@ -62,16 +72,20 @@ public class Math {
                             throw new OperatorNotFoundException();
                     }
                 } catch (NumberFormatException e) {
+                    logger.error("Ошибка ввода. Неверные параметры");
                     System.out.println("Вероятно вы ввели не числа. Попробуйте снова.");
                 } catch (OperatorNotFoundException e) {
+                    logger.error("Ошибка ввода. Не найден математический оператор");
                     System.out.println("Оператор \"" + operator + "\" не найден. Попробуйте снова.");
                 } catch (IncorrectInputException e) {
+                    logger.error("Ошибка ввода. Неверный формат");
                     System.out.println("Введено недостаточно параметров или вы забыли пробелы. Попробуйте снова.");
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Ошибка чтения с консоли");
         }
+        logger.info("Закрытие приложения");
 
     }
 
@@ -82,6 +96,7 @@ public class Math {
      * @return - возвращает сумму двух чисел.
      */
     public double sumTest(double one, double two) {
+        logger.info("Операция сложения");
         System.out.println("Складываем " + one + " и " + two);
         return one + two;
     }
@@ -93,6 +108,7 @@ public class Math {
      * @return - возвращает разницу двух чисел.
      */
     public double subTest(double one, double two) {
+        logger.info("Операция вычитания");
         System.out.println("Из " + one + " вычитаем " + two);
         return one - two;
     }
@@ -104,6 +120,7 @@ public class Math {
      * @return - возвращает произведение двух чисел.
      */
     public double mulTest(double one, double two) {
+        logger.info("Операция умножения");
         System.out.println("Умножаем " + one + " на " + two);
         return one * two;
     }
@@ -115,6 +132,7 @@ public class Math {
      * @return - возвращает частное двух чисел.
      */
     public double divTest(double one, double two) {
+        logger.info("Операция деления");
         System.out.println("Делим " + one + " на " + two);
         return one / two;
     }
